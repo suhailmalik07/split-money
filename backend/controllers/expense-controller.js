@@ -15,9 +15,9 @@ const getExpenses = async (req, res) => {
       youOwe: 0,
       balance: 0,
     };
-    const expenses = await Expense.find({ "details.user": id }).populate(
-      "details.user"
-    );
+    const expenses = await Expense.find({ "details.user": id })
+      .sort({ createdAt: -1 })
+      .populate("details.user");
 
     expenses.forEach((expense) => {
       const totalAmount = expense.totalAmount;

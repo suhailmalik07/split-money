@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Box,
   Button,
   makeStyles,
   TextField,
@@ -28,16 +29,12 @@ const useStyles = makeStyles((theme) => ({
 const AddBoard = () => {
   const classes = useStyles();
   const [name, setName] = useState("");
-  const [isDivideEqually, setIsDivideEqually] = useState(false);
-  const [details, setDetails] = useState([]);
   const [users, setUsers] = useState([]);
   const [fields, setFields] = useState([
     { id: "5fa12ec376800e48644b82aa", paid: 0, toPay: 0 },
   ]);
-  const history = useHistory();
 
-  const currUserId = "5fa12ec376800e48644b82aa";
-  const currUser = users.find((user) => user._id === currUserId);
+  const history = useHistory();
 
   useEffect(() => {
     Axios.get("http://localhost:8000/api/users")
@@ -50,14 +47,12 @@ const AddBoard = () => {
   }, []);
 
   const handleChange = (indx, user, paid, toPay) => {
-    console.log(user);
     fields[indx] = {
       ...fields[indx],
       id: user,
       paid: Number(paid),
       toPay: Number(toPay),
     };
-    console.log(fields);
   };
 
   const handleSubmit = (e) => {
@@ -101,6 +96,7 @@ const AddBoard = () => {
           onChange={(e) => setName(e.target.value)}
           label="Name"
           variant="outlined"
+          required
         />
 
         {fields.map((item, i) => (
@@ -111,13 +107,17 @@ const AddBoard = () => {
           />
         ))}
 
-        <Button
-          onClick={() => {
-            setFields([...fields, { id: "", paid: 0, toPay: 0 }]);
-          }}
-        >
-          Add More
-        </Button>
+        <Box display="flex" justifyContent="flex-end">
+          <Button
+            onClick={() => {
+              setFields([...fields, { id: "", paid: 0, toPay: 0 }]);
+            }}
+            variant="contained"
+            style={{ backgroundColor: "green", color: "white" }}
+          >
+            Add More User+
+          </Button>
+        </Box>
 
         <Button type="submit" variant="contained" color="primary">
           Add

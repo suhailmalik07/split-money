@@ -18,11 +18,11 @@ const useStyles = makeStyles({
   },
   nameIcons: {
     display: "flex",
-    alignItems: 'center',
+    alignItems: "center",
 
-    '&  h6': {
-      marginLeft: '1rem'
-    }
+    "&  h6": {
+      marginLeft: "1rem",
+    },
   },
 });
 
@@ -34,6 +34,17 @@ export default function ListItem({ name = "Expense", totalAmount, details }) {
   // find and store user object with details like paid and toPay
   const currUserObject = details.find((item) => item.user._id === currUserId);
   const isDue = currUserObject.paid === 0;
+  let user = "";
+
+  if (isDue) {
+    user += details.find((item) => item.paid > 0).user.name;
+  } else {
+    const users = details
+      .filter((item) => item.user._id !== currUserId)
+      .map((item) => item.user.name);
+
+    user += users.join(", ");
+  }
 
   return (
     <>
@@ -45,7 +56,10 @@ export default function ListItem({ name = "Expense", totalAmount, details }) {
         <CardContent className={classes.card}>
           <Box className={classes.nameIcons}>
             <UserIcon name={name || "Expense"} />
-            <Typography component='h6' >{name || "Expense"}</Typography>
+            <Box>
+              <Typography component="h6">{name || "Expense"}</Typography>
+              <Typography component='h6'>{user}</Typography>
+            </Box>
           </Box>
           <Box>
             {isDue ? (

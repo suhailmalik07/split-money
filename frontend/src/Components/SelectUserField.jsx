@@ -42,7 +42,7 @@ const SelectUserField = ({ options, disabled, onChange }) => {
   return (
     <div className={classes.root}>
       <FormControl variant="filled">
-        <InputLabel id="demo-simple-select-filled-label">User</InputLabel>
+        <InputLabel id="demo-simple-select-filled-label" required>User</InputLabel>
         <Select
           labelId="demo-simple-select-filled-label"
           id="demo-simple-select-filled"
@@ -63,6 +63,7 @@ const SelectUserField = ({ options, disabled, onChange }) => {
       <TextField
         type="number"
         label="Paid"
+        required
         value={state.paid}
         name="paid"
         variant="outlined"
@@ -72,6 +73,7 @@ const SelectUserField = ({ options, disabled, onChange }) => {
       <TextField
         type="number"
         label="To Pay"
+        required
         value={state.toPay}
         name="toPay"
         variant="outlined"

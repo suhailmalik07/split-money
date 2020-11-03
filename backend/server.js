@@ -2,8 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const { getUsers, addUser } = require("./controllers/user-controller");
-const { addExpense, getExpenses } = require("./controllers/expense-controller");
+const userRoutes = require("./routes/userRoutes");
+const expenseRoutes = require("./routes/expenseRoutes");
 
 const app = express();
 
@@ -21,11 +21,8 @@ mongoose.connect(
 app.use(express.json());
 app.use(cors());
 
-app.get("/api/users", getUsers);
-app.post("/api/users", addUser);
-
-app.get("/api", getExpenses);
-app.post("/api", addExpense);
+app.use("/api", expenseRoutes);
+app.use("/api/users", userRoutes);
 
 app.listen(8000, () => {
   console.log("server is up an running!");

@@ -47,8 +47,6 @@ const addExpense = async (req, res) => {
   */
   const { totalAmount, details, name } = req.body;
 
-  console.log(totalAmount, details, name)
-
   try {
     const expense = await new Expense({
       name,

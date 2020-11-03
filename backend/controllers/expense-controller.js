@@ -15,7 +15,9 @@ const getExpenses = async (req, res) => {
       youOwe: 0,
       balance: 0,
     };
-    const expenses = await Expense.find({ "details.user": id });
+    const expenses = await Expense.find({ "details.user": id }).populate(
+      "details.user"
+    );
 
     expenses.forEach((expense) => {
       const totalAmount = expense.totalAmount;
@@ -43,7 +45,9 @@ const addExpense = async (req, res) => {
   /*
   EX - {totalAmount: 250, details: [{user: id1, toPay: 0, paid: 250}, {user: id2, toPay: 125, paid: 0}]}
   */
-  const { totalAmount, details } = req.body;
+  const { totalAmount, details, name } = req.body;
+
+  console.log(totalAmount, details, name)
 
   try {
     const expense = await new Expense({

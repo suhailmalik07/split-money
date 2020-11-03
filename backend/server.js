@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const { getUsers, addUser } = require("./controllers/user-controller");
 const { addExpense, getExpenses } = require("./controllers/expense-controller");
 
@@ -18,6 +19,7 @@ mongoose.connect(
 );
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/api/users", getUsers);
 app.post("/api/users", addUser);

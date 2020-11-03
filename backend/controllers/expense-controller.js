@@ -9,14 +9,13 @@ const getExpenses = async (req, res) => {
   // provide user balance, owned and ow
   try {
     const currUser = await User.findById(id);
-    console.log(currUser);
 
     const results = {
       owesYou: 0,
       youOwe: 0,
       balance: 0,
     };
-    const expenses = await Expense.find({'details.user': id});
+    const expenses = await Expense.find({ "details.user": id });
 
     expenses.forEach((expense) => {
       const totalAmount = expense.totalAmount;
@@ -47,7 +46,11 @@ const addExpense = async (req, res) => {
   const { totalAmount, details } = req.body;
 
   try {
-    const expense = await new Expense({ totalAmount, details: details }).save();
+    const expense = await new Expense({
+      name,
+      totalAmount,
+      details: details,
+    }).save();
     res.json(expense);
   } catch (error) {
     res.status(400).json({ error: true, message: error.message });
